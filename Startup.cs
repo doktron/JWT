@@ -2,12 +2,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Infrastructure;
 using Microsoft.Owin.Security.Jwt;
 using Owin;
 using WebApplication2;
@@ -23,12 +20,13 @@ namespace WebApplication2
 			app.UseJwtBearerAuthentication(
 				new JwtBearerAuthenticationOptions
 				{
-					TokenHandler = new DatschaJwtSecurityTokenHandler(),
+					TokenHandler = new TestJwtSecurityTokenHandler(),
 					TokenValidationParameters = new TokenValidationParameters
 					{
 						ValidateIssuerSigningKey = true,
 						IssuerSigningKey =
-							new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ELh8O0ZYvoPVxymuLt6QmqBaAZomFHqB67oknRZjbK/RCHvh5JQ6lqOX0aic61t9nOtkTPkBifw9+1CMNCFtcVt53SVjr7UMIGr2jkPR5QBepgAr/yC1z35+o+lErWKBKl9NIg01Ge02VyuOC/u5axVPLo0gQnI7ww2n5QzLx3MIdGTkhMLyKIwT9aj0J8ODxDfU9H7UYeftEl7/jjThapC4hpaW1edSXQYBDE3JR5xKIyDU99L0NBN99nJk8plYMooXO6Et7O9QgZd401SZI8vBtWoTDHO9xFGDGd507mpsqNnDsgv7HDYxhHY7e2C+49OnojwuRCYWWnZPqdMQ2w==")),
+							new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+								"ELh8O0ZYvoPVxymuLt6QmqBaAZomFHqB67oknRZjbK/RCHvh5JQ6lqOX0aic61t9nOtkTPkBifw9+1CMNCFtcVt53SVjr7UMIGr2jkPR5QBepgAr/yC1z35+o+lErWKBKl9NIg01Ge02VyuOC/u5axVPLo0gQnI7ww2n5QzLx3MIdGTkhMLyKIwT9aj0J8ODxDfU9H7UYeftEl7/jjThapC4hpaW1edSXQYBDE3JR5xKIyDU99L0NBN99nJk8plYMooXO6Et7O9QgZd401SZI8vBtWoTDHO9xFGDGd507mpsqNnDsgv7HDYxhHY7e2C+49OnojwuRCYWWnZPqdMQ2w==")),
 						ValidateIssuer = false,
 						ValidateAudience = false,
 						ValidateLifetime = false
@@ -37,7 +35,7 @@ namespace WebApplication2
 		}
 	}
 
-	public class DatschaJwtSecurityTokenHandler : JwtSecurityTokenHandler
+	public class TestJwtSecurityTokenHandler : JwtSecurityTokenHandler
 	{
 		public override ClaimsPrincipal ValidateToken(string token, TokenValidationParameters validationParameters,
 			out SecurityToken validatedToken)
