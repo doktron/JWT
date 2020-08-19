@@ -43,7 +43,11 @@ namespace WebApplication2.Controllers
 	{
 		protected override bool AuthorizeCore(HttpContextBase httpContext)
 		{
-			var token = httpContext.Request.Cookies["access_token"]?.Value ?? httpContext.Request.Headers["Authorization"].Replace("Bearer ", "");
+			var token = httpContext.Request.Headers["Authorization"]?.Replace("Bearer ", "");
+			if (string.IsNullOrEmpty(token))
+			{
+				token = httpContext.Request.Cookies["access_token"]?.Value;
+			}
 
 			var tokenHandler = new TestJwtSecurityTokenHandler();
 			var tokenValidationParameters = new TokenValidationParameters
